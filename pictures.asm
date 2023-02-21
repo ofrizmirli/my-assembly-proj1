@@ -24,13 +24,21 @@ hart db 13,10,"     __              __",13,10
 	 db " \                         /",13,10
 	 db "   \ _                 _ /",13,10
 	 db "       - _         _ - ",13,10
-	 db "           ', _ ,'",13,10,'$'	
+	 db "           ', _ ,'",13,10,'$'
+elefant db 13,10,"          __     __",13,10 
+        db "         /__\~~~/__\ ",13,10
+		db "   ,----((    ..   ))",13,10
+		db "  /      \\_     _//",13,10
+		db " /|         (\ _|(",13,10
+		db "^ \   /__\  / \_|",13,10
+		db "   |_|    |_| |/",13,10,'$'
 message db " _______________________",13,10
-        db "|_pictures_|_operations_|",13,10               
-		db "| BANNY-1  | EXIT-0     |",13,10
-		db "| OWL-2    |            |",13,10
-		db "| HEART-3  |            |",13,10
-		db " -----------------------",13,10,'$'  
+        db "|_pictures__|_operations_|",13,10               
+		db "| BANNY-1   | EXIT-0     |",13,10
+		db "| OWL-2     |            |",13,10
+		db "| HEART-3   |            |",13,10
+		db "| ELEPHANT-4|            |",13,10
+		db " ------------------------",13,10,'$'  
 CODESEG
 proc buny		
 	mov ax,@data
@@ -67,7 +75,15 @@ proc massage
 	int 21h
 	ret
 endp massage
-    
+proc elefent		
+	mov ax,@data
+	mov ds,ax
+	mov ah,9h
+	mov dx,offset elefant
+	int 21h
+	inc bx
+	ret
+endp elefent    
 start:
     xor bx,bx
     mov ah, 0
@@ -88,6 +104,8 @@ start:
 		JE callo
 		cmp al,3
 		JE callh
+		cmp al,4
+		JE calle
 		jmp lup
 		callb:
 			call buny
@@ -101,6 +119,9 @@ start:
 		callm:
 			call massage
 			xor bx,bx
+			jmp lup
+		calle:
+			call elefent
 			jmp lup
     exit:
         mov ax, 4C00h
